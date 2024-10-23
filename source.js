@@ -112,16 +112,15 @@ async function getEnhancedFingerprint() {
         };
     }
 
-    // Simple hash function for fingerprinting
-    function hashFingerprint(fingerprint) {
+    // Function to hash the fingerprint using SHA-256
+    async function hashFingerprint(fingerprint) {
         const string = JSON.stringify(fingerprint);
-        let hash = 0, i, chr;
-        for (i = 0; i < string.length; i++) {
-            chr = string.charCodeAt(i);
-            hash = (hash << 5) - hash + chr;
-            hash |= 0; // Convert to 32bit integer
-        }
-        return hash.toString();
+        const encoder = new TextEncoder();
+        const data = encoder.encode(string);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', data); // hash the data
+        const hashArray = Array.from(new Uint8Array(hashBuffer)); // convert buffer to byte array
+        const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join(''); // convert bytes to hex string
+        return hashHex;
     }
 
     // Collect fingerprint data
@@ -144,7 +143,7 @@ async function getEnhancedFingerprint() {
         deviceSpecs: getDeviceSpecs()
     };
 
-    return hashFingerprint(fingerprint);
+    return await hashFingerprint(fingerprint); // Return the SHA-256 hash of the fingerprint
 }
 
 // Example usage
