@@ -25,7 +25,7 @@ async function getEnhancedFingerprint() {
 
     function detectFonts() {
         const baseFonts = ['monospace', 'sans-serif', 'serif'];
-        const testString = 'mmmmmmmmmmlli';
+        const testString = "❁ I Want me a Tasty Fruit Salad!\n\r <🍏🍎🍐🍊🍋🍌🍉🍇🍓🍈🍒🍑🍍🥝>";
         const defaultWidth = {};
         const defaultHeight = {};
         const fonts = ['Arial', 'Courier New', 'Times New Roman'];
