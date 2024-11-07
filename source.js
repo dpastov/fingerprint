@@ -81,19 +81,6 @@ async function getEnhancedFingerprint() {
         }
     }
 
-    async function getBatteryInfo() {
-        if (navigator.getBattery) {
-            const battery = await navigator.getBattery();
-            return {
-                charging: battery.charging,
-                level: battery.level,
-                chargingTime: battery.chargingTime,
-                dischargingTime: battery.dischargingTime
-            };
-        }
-        return {};
-    }
-
     function getStorageInfo() {
         return {
             localStorageSupported: typeof window.localStorage !== 'undefined',
@@ -137,7 +124,6 @@ async function getEnhancedFingerprint() {
         fonts: detectFonts(),
         webGL: getWebGLInfo(),
         mediaDevices: await getMediaDevices(),
-        batteryInfo: await getBatteryInfo(),
         storage: getStorageInfo(),
         cookiesEnabled: areCookiesEnabled(),
         deviceSpecs: getDeviceSpecs()
